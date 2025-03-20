@@ -1,0 +1,16 @@
+add Jonh 0987654321
+add Jonh 0501111111
+add Alex 0505222222
+add Jane 0505555555
+add-birthday Jonh 08.01.1969
+add-birthday Jane 23.04.1997
+add-birthday Alex 29.03.1973
+add Mike 0204444444
+add-birthday Mike 1.02.1983
+birthdays 300
+change Jonh 0987654321 1234567890
+sh-br Jane
+sh-br Jonh
+sh-br John
+sh-br Mike
+add Mike 098765432
