@@ -346,7 +346,7 @@ def load_data(filename="addressbook.pkl"):
 # Main function
 def main():
     """Main function to run the Address Book Assistant."""
-    # book = AddressBook()
+
     book = load_data()
 
     greeting()
@@ -389,9 +389,11 @@ def main():
         else:
             print(f"\n{Fore.RED}Invalid command.{Style.RESET_ALL}\n")
 
-    print(f"\n{Fore.WHITE}Goodbye!{Style.RESET_ALL}\n")
+    print(f"\n{Fore.WHITE}Goodbye!{Style.RESET_ALL}")
 
     save_data(book)
+
+    print(f"\n{Fore.GREEN}Data saved successfully!{Style.RESET_ALL}\n")
 
 
 if __name__ == "__main__":
