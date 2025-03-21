@@ -142,7 +142,7 @@ class Record:
 
     def __str__(self):
         phone_numbers = "; ".join([str(phone) for phone in self.phones])
-        return f"{Fore.WHITE}Contact name: {Fore.GREEN}{self.name}, {Fore.WHITE}phones: {Fore.YELLOW}{phone_numbers}{Style.RESET_ALL}"
+        return f"{Fore.WHITE}Contact name: {Fore.GREEN}{str(self.name):15} {Fore.WHITE}birthday: " + f"{Fore.YELLOW if self.birthday else Fore.RED + Style.DIM}{str(self.birthday):15} {Style.RESET_ALL}{Fore.WHITE}phones: {Fore.YELLOW}{phone_numbers}{Style.RESET_ALL}"
 
 
 # AddressBook class
@@ -326,7 +326,7 @@ def get_upcoming_birthdays(args, book):
         else:
             message = f"\n{Fore.YELLOW}Upcoming birthdays in the next {days} days:{Style.RESET_ALL}\n"
             for record in upcoming_birthdays:
-                message += f"\n{Fore.WHITE}Contact: {Fore.GREEN}{record['name']}, {Fore.WHITE}Birthday: {Fore.YELLOW}{record['birthday']}{Style.RESET_ALL}"
+                message += f"\n{Fore.WHITE}Contact: {Fore.GREEN}{str(record['name']):16} {Fore.WHITE}Celebrate a birthday: {Fore.YELLOW}{record['birthday']}{Style.RESET_ALL}"
             message += "\n"
     return message
 
