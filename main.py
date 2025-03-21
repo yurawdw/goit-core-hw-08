@@ -1,5 +1,5 @@
 """
-Address Book Assistant - v0.0.18
+Address Book Assistant - v0.0.19
 
 Author: Yury Vdovychenko
 
@@ -69,9 +69,8 @@ class Field:
     def __str__(self):
         return str(self.value)
 
+
 # Class for user name
-
-
 class Name(Field):
     """Class for storing and validating a contact's name."""
 
@@ -81,9 +80,8 @@ class Name(Field):
                 f"\n{Fore.RED}Name is required{Style.RESET_ALL}\n")
         super().__init__(value)
 
+
 # Class for user's birthday
-
-
 class Birthday(Field):
     """Class for storing and validating a contact's birthday."""
 
@@ -146,9 +144,8 @@ class Record:
         phone_numbers = "; ".join([str(phone) for phone in self.phones])
         return f"{Fore.WHITE}Contact name: {Fore.GREEN}{self.name}, {Fore.WHITE}phones: {Fore.YELLOW}{phone_numbers}{Style.RESET_ALL}"
 
+
 # AddressBook class
-
-
 class AddressBook(UserDict):
     """Class for storing and managing multiple contacts."""
 
@@ -169,7 +166,6 @@ class AddressBook(UserDict):
         """Shift the date if it falls on a weekend."""
         return timedelta(days=(0 if date.weekday() < 5 else 7 - date.weekday()))
 
-# работаю над включением этого метода в класс AddressBook
     def get_upcoming_birthdays(self, days=7):
         """Get contacts with birthdays in the next <days> days."""
         today = datetime.now()
@@ -223,7 +219,8 @@ def add_contact(args, book):
     if len(args) < 2:
         raise ValueError(
             f"{Fore.RED}Error: Provide a name and phone number.{Style.RESET_ALL}")
-    name, phone = args[0], args[1]
+    *name_parts, phone = args
+    name = " ".join(name_parts).strip()
     record = book.find(name)
     if record:
         record.add_phone(phone)
@@ -239,7 +236,9 @@ def change_contact(args, book):
     """Change an existing phone number for a contact."""
     if len(args) < 3:
         return f"\n{Fore.RED}Error: Provide a name, old phone, and new phone.{Style.RESET_ALL}\n"
-    name, old_phone, new_phone = args[0], args[1], args[2]
+    *name_parts, old_phone, new_phone = args
+    name = " ".join(name_parts).strip()
+
     record = book.find(name)
     if record:
         record.edit_phone(old_phone, new_phone)
@@ -254,7 +253,8 @@ def show_contact(args, book):
     if len(args) < 1:
         raise ValueError(
             f"{Fore.RED}Error: Provide a name to search for.{Style.RESET_ALL}")
-    name = args[0]
+
+    name = " ".join(args).strip()
     record = book.find(name)
     if record:
         return f"\n{Fore.GREEN}{record}{Style.RESET_ALL}\n"
@@ -276,7 +276,9 @@ def add_birthday(args, book):
     if len(args) < 2:
         raise ValueError(
             f"{Fore.RED}Error: Provide a name and birthday (DD.MM.YYYY).{Style.RESET_ALL}")
-    name, birthday = args[0], args[1]
+
+    *name_parts, birthday = args
+    name = " ".join(name_parts).strip()
     record = book.find(name)
     if record:
         record.add_birthday(birthday)
@@ -291,7 +293,8 @@ def show_birthday(args, book):
     if len(args) < 1:
         raise ValueError(
             f"{Fore.RED}Error: Provide a name to search for.{Style.RESET_ALL}")
-    name = args[0]
+
+    name = " ".join(args).strip()
     record = book.find(name)
     if record and record.birthday:
         return f"\n{Fore.WHITE}Birthday: {Fore.GREEN}{record.birthday.value}{Style.RESET_ALL}\n"
@@ -350,6 +353,7 @@ def main():
     book = load_data()
 
     greeting()
+
     while True:
         user_input = input(f"Enter a command: {Fore.WHITE}")
         Style.RESET_ALL
